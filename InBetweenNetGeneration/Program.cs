@@ -20,8 +20,10 @@ namespace InBetweenNetGeneration
         {
             // Get the current command-line arguments configuration.
             var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json", true).AddCommandLine(args).Build();
+            // Get the mode in which to run the application.
+            var mode = configuration["Mode"] ?? "Help";
             // Get the host to run based on the command-line arguments and build it.
-            using var host = (configuration["Mode"] == "Cli" ? CreateCliHostBuilder(args) : CreateDefaultHostBuilder(args)).Build();
+            using var host = (mode == "Cli" ? CreateCliHostBuilder(args) : CreateDefaultHostBuilder(args)).Build();
             // Get the corresponding logger.
             var logger = host.Services.GetService<ILogger<Program>>();
             // Display a message.

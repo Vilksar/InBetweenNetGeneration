@@ -163,7 +163,7 @@ namespace InBetweenNetGeneration.Helpers.Services
             catch (Exception exception)
             {
                 // Log an error.
-                _logger.LogError($"The error \"{exception.Message}\" occured while reading the file \"{mainNetworkFilepath}\" (containing the main network edges).");
+                _logger.LogError($"The error \"{exception.Message}\" occurred while reading the file \"{mainNetworkFilepath}\" (containing the main network edges).");
                 // Stop the application.
                 _hostApplicationLifetime.StopApplication();
                 // Return a successfully completed task.
@@ -181,7 +181,7 @@ namespace InBetweenNetGeneration.Helpers.Services
             catch (Exception exception)
             {
                 // Log an error.
-                _logger.LogError($"The error \"{exception.Message}\" occured while reading the file \"{downstreamNodes}\" (containing the downstream seed nodes).");
+                _logger.LogError($"The error \"{exception.Message}\" occurred while reading the file \"{downstreamNodes}\" (containing the downstream seed nodes).");
                 // Stop the application.
                 _hostApplicationLifetime.StopApplication();
                 // Return a successfully completed task.
@@ -199,7 +199,7 @@ namespace InBetweenNetGeneration.Helpers.Services
             catch (Exception exception)
             {
                 // Log an error.
-                _logger.LogError($"The error \"{exception.Message}\" occured while reading the file \"{upstreamNodes}\" (containing the upstream seed nodes).");
+                _logger.LogError($"The error \"{exception.Message}\" occurred while reading the file \"{upstreamNodes}\" (containing the upstream seed nodes).");
                 // Stop the application.
                 _hostApplicationLifetime.StopApplication();
                 // Return a successfully completed task.
@@ -214,14 +214,18 @@ namespace InBetweenNetGeneration.Helpers.Services
             catch (Exception exception)
             {
                 // Log an error.
-                _logger.LogError($"The error \"{exception.Message}\" occured while reading the file \"{parametersFilepath}\" (containing the parameters).");
+                _logger.LogError($"The error \"{exception.Message}\" occurred while reading the file \"{parametersFilepath}\" (containing the parameters).");
                 // Stop the application.
                 _hostApplicationLifetime.StopApplication();
                 // Return a successfully completed task.
                 return;
             }
-            // Update the output filepath with the default value, if required.
-            outputFilepath = !string.IsNullOrEmpty(outputFilepath) ? outputFilepath : mainNetworkFilepath.Replace(Path.GetExtension(mainNetworkFilepath), $"_Output_{DateTime.Now:yyyyMMddHHmmss}.txt");
+            // Check if there isn't an output filepath provided.
+            if (string.IsNullOrEmpty(outputFilepath))
+            {
+                // Assign the default value to the output filepath.
+                outputFilepath = mainNetworkFilepath.Replace(Path.GetExtension(mainNetworkFilepath), $"_Output_{DateTime.Now:yyyyMMddHHmmss}.txt");
+            }
             // Try to write to the output file.
             try
             {
@@ -231,7 +235,7 @@ namespace InBetweenNetGeneration.Helpers.Services
             catch (Exception exception)
             {
                 // Log an error.
-                _logger.LogError($"The error \"{exception.Message}\" occured while trying to write to the output file \"{outputFilepath}\".");
+                _logger.LogError($"The error \"{exception.Message}\" occurred while trying to write to the output file \"{outputFilepath}\".");
                 // Stop the application.
                 _hostApplicationLifetime.StopApplication();
                 // Return a successfully completed task.
@@ -322,14 +326,14 @@ namespace InBetweenNetGeneration.Helpers.Services
                 // Write the text to the file.
                 File.WriteAllText(outputFilepath, outputText);
                 // Log a message.
-                _logger.LogInformation($"The generated new network has been written in text format to the file \"{outputFilepath}\".");
+                _logger.LogInformation($"The results have been written to the file \"{outputFilepath}\".");
             }
             catch (Exception exception)
             {
                 // Log an error.
-                _logger.LogError(exception.Message);
-                // Log a message.
-                _logger.LogInformation($"An error occured while writing the generated new network to the file \"{outputFilepath}\". The text will be displayed below instead.\n\n{outputText}\n");
+                _logger.LogError($"The error \"{exception.Message}\" occurred while writing the results to the file \"{outputFilepath}\". The results will be displayed below instead.");
+                // Log the output text.
+                _logger.LogInformation($"\n{outputText}");
                 // Stop the application.
                 _hostApplicationLifetime.StopApplication();
                 // Return a successfully completed task.
