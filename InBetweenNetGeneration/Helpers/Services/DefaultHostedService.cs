@@ -80,7 +80,7 @@ namespace InBetweenNetGeneration.Helpers.Services
                 "\n\t--Mode \"Cli\" --MainNetwork \"Path/To/FileContainingMainNetworkEdges.extension\" --DownstreamNodes \"Path/To/FileContainingDownstreamNodes.extension\" --UpstreamNodes \"Path/To/FileContainingUpstreamNodes.extension\" --Parameters \"Path/To/FileContainingParameters.extension\"",
                 "\n\t"));
             // Check if the mode is not valid.
-            if (mode != "Help")
+            if (!string.IsNullOrEmpty(mode) && mode != "Help")
             {
                 // Log an error.
                 _logger.LogError($"The provided mode \"{mode}\" for running the application is not valid.");
