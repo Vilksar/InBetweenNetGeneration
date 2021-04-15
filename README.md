@@ -91,7 +91,7 @@ This mode has four mandatory arguments (omitting any of them will return an erro
   * `MaximumUpstreamPathLength`. Represents the maximum number of edges from the intermediary nodes to the downstream nodes. It must be a positive integer, and its default value is `2`.
   * `MaximumDownstreamPathLength`. Represents the maximum number of edges from the upstream nodes to the intermediary nodes. It must be a positive integer, and its default value is `2`.
   
-  You can generate a model file containing the default parameter values by running the application with the `Mode` argument set to `Help` and the `GenerateParametersFile` argument set to `True`. If the file is in a different format, an error will be returned. Additionally, if any of the parameters are missing, their default values will be used. This argument does not have a default value.
+  You can generate a model file containing the default parameter values by running the application with the `--Mode` argument set to `Help` and the `--GenerateParametersFile` argument set to `True`. If the file is in a different format, an error will be returned. Additionally, if any of the parameters are missing, their default values will be used. This argument does not have a default value.
 
 * `--Output`. (optional) Use this argument to specify the path to the output file where the nodes of the generated new network will be written. Writing permission is needed for the corresponding directory. If a file with the same name already exists, it will be automatically overwritten. The default value is the name of the file containing the main network, followed by the current date and time.
 
