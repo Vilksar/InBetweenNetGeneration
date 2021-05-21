@@ -91,5 +91,19 @@ namespace InBetweenNetGeneration.Helpers.Models
             // Return the final list of nodes.
             return downstreamNodeList.Concat(upstreamNodeList).SelectMany(item => item).Distinct().ToList();
         }
+
+        /// <summary>
+        /// Generates a new network starting from the current main network.
+        /// </summary>
+        /// <param name="edges">The edges of the main network.</param>
+        /// <param name="newNodes">The nodes of the new network.</param>
+        /// <returns>A list of edges in the main network corresponding to the new network.</returns>
+        public static List<(string, string)> GetEdgesOfNewNetwork(IEnumerable<(string, string)> edges, IEnumerable<string> newNodes)
+        {
+            // Convert the nodes into a hash set.
+            var hashSet = newNodes.ToHashSet();
+            // Return the edges where both nodes are in the new network.
+            return edges.Where(item => hashSet.Contains(item.Item1) && hashSet.Contains(item.Item2)).ToList();
+        }
     }
 }

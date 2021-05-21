@@ -310,7 +310,7 @@ namespace InBetweenNetGeneration.Helpers.Services
             if (newNodes == null || !newNodes.Any())
             {
                 // Log an error.
-                _logger.LogError($"An error occurred during network generation.");
+                _logger.LogError($"An error occurred during the network generation.");
                 // Stop the application.
                 _hostApplicationLifetime.StopApplication();
                 // Return a successfully completed task.
@@ -318,8 +318,22 @@ namespace InBetweenNetGeneration.Helpers.Services
             }
             // Log a message.
             _logger.LogInformation($"The list of nodes for the new network has been generated successfully. It contains {newNodes.Count()} nodes.");
+            // Get the edges of the new network.
+            var newEdges = Network.GetEdgesOfNewNetwork(edges, newNodes);
+            // Check if the network wasn't generated successfully.
+            if (newEdges == null || !newEdges.Any())
+            {
+                // Log an error.
+                _logger.LogError($"An error occurred during the network generation.");
+                // Stop the application.
+                _hostApplicationLifetime.StopApplication();
+                // Return a successfully completed task.
+                return;
+            }
+            // Log a message.
+            _logger.LogInformation($"The list of edges for the new network has been generated successfully. It contains {newEdges.Count()} edges.");
             // Get the text to write to the file.
-            var outputText = Network.NodesToText(newNodes);
+            var outputText = Network.EdgesToText(newEdges);
             // Try to write to the specified file.
             try
             {
